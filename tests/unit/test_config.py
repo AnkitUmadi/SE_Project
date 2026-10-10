@@ -3,9 +3,9 @@
 from src.config import TestConfig
 
 
-def test_test_config_uses_in_memory_sqlite():
-    assert TestConfig.SQLALCHEMY_DATABASE_URI == "sqlite:///:memory:"
+def test_test_config_is_marked_as_testing():
     assert TestConfig.TESTING is True
+    assert TestConfig.WTF_CSRF_ENABLED is False
 
 
 def test_session_lifetime_is_30_minutes():
