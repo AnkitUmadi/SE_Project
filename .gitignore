@@ -1,0 +1,37 @@
+# ---- Python ----
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+lint_report.txt
+security_report.json
+
+# ---- Virtual environment (each person creates their own) ----
+.venv/
+venv/
+
+# ---- Secrets (NEVER commit these) ----
+.env
+*.env.local
+
+# ---- Frontend (React / Node) ----
+frontend/node_modules/
+frontend/dist/
+frontend/coverage/
+
+# ---- Database files ----
+*.sqlite
+*.db
+
+# ---- Build / package output ----
+deployment-package.zip
+artifacts/
+
+# ---- Editors / OS ----
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
