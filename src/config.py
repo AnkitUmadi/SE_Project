@@ -19,8 +19,12 @@ class Config:
 
 
 class TestConfig(Config):
-    """Settings for automated tests: fast in-memory SQLite database."""
+    """Settings for automated tests.
 
-    SQLALCHEMY_DATABASE_URI = "sqlite:///:memory:"
+    Default: fast in-memory SQLite. CI sets TEST_DATABASE_URL to run the
+    integration tests against a real MySQL database instead.
+    """
+
+    SQLALCHEMY_DATABASE_URI = os.getenv("TEST_DATABASE_URL", "sqlite:///:memory:")
     TESTING = True
     WTF_CSRF_ENABLED = False  # individual security tests switch it back on
