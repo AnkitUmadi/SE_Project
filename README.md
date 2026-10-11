@@ -46,7 +46,7 @@ You need: Git, Python 3.10+, Node.js 20 or newer, MySQL 8.
 
 ```powershell
 # 1. Get the code
-git clone https://github.com/AnkitUmadi/SE_Project.git
+git clone https://github.com/suhasdstudy123-crypto/SE_Project.git
 cd SE_Project
 
 # 2. Backend: create and activate a virtual environment, then install libraries
@@ -69,6 +69,12 @@ Create the database once (reads your `.env`, safe to re-run):
 python scripts/create_db.py
 ```
 
+Create a login account for yourself (asks for a password; until seed data exists):
+```powershell
+python scripts/create_user.py admin@pes.edu "Admin User" admin
+```
+Roles: `admin`, `faculty`, `student`.
+
 ## Running the app (two terminals)
 ```powershell
 # Terminal 1 — backend (http://localhost:5000)
@@ -79,7 +85,7 @@ python run.py
 cd frontend
 npm run dev
 ```
-Open http://localhost:5173 — it should say **"Backend is online ✅"**.
+Open http://localhost:5173 and log in with the account you created.
 
 ## Checks to run before every pull request
 ```powershell
@@ -103,4 +109,4 @@ npm run format                   # auto-format
 5. A teammate reviews; once CI is green and approved, it is merged. Never push directly to `main`.
 
 ## Documents
-SRS, SAD and Test Plan are in the `docs/` folder.
+SRS, SAD and Test Plan will be added to the `docs/` folder.
