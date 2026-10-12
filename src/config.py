@@ -13,7 +13,8 @@ class Config:
     SECRET_KEY = os.getenv("SECRET_KEY", "dev-only-secret-change-me")
     SQLALCHEMY_DATABASE_URI = os.getenv("DATABASE_URL", "sqlite:///dev.sqlite")
     SQLALCHEMY_TRACK_MODIFICATIONS = False
-    SESSION_COOKIE_HTTPONLY = True
+    SESSION_COOKIE_HTTPONLY = True  # JavaScript cannot read the session cookie
+    SESSION_COOKIE_SAMESITE = "Lax"  # cookie not sent on cross-site POSTs
     PERMANENT_SESSION_LIFETIME = 30 * 60  # 30 minutes (SRS-F-003)
     TESTING = False
 

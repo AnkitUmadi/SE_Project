@@ -1,24 +1,43 @@
-import { useEffect, useState } from "react";
-import { Alert, Container } from "react-bootstrap";
-import { getHealth } from "./api/client.js";
+import { Container, Spinner } from "react-bootstrap";
+import { Navigate, Route, Routes } from "react-router-dom";
+import AppNavbar from "./components/AppNavbar.jsx";
+import RequireRole from "./components/RequireRole.jsx";
+import { HOME_BY_ROLE, useAuth } from "./auth/authContext.js";
+import HomePage from "./pages/HomePage.jsx";
+import LoginPage from "./pages/LoginPage.jsx";
 
 export default function App() {
-  const [status, setStatus] = useState("checking");
+  const { user, loading } = useAuth();
 
-  useEffect(() => {
-    getHealth()
-      .then((data) => setStatus(data.status === "ok" ? "online" : "offline"))
-      .catch(() => setStatus("offline"));
-  }, []);
+  if (loading) {
+    return (
+      <Container className="py-5 text-center">
+        <Spinner animation="border" role="status" aria-label="Loading" />
+      </Container>
+    );
+  }
 
   return (
-    <Container className="py-5">
-      <h1 className="mb-4">Student Record System</h1>
-      {status === "checking" && <Alert variant="secondary">Checking backend…</Alert>}
-      {status === "online" && <Alert variant="success">Backend is online ✅</Alert>}
-      {status === "offline" && (
-        <Alert variant="danger">Backend is offline. Start it with: python run.py</Alert>
-      )}
-    </Container>
+    <>
+      <AppNavbar />
+      <Routes>
+        <Route path="/login" element={<LoginPage />} />
+        {Object.entries(HOME_BY_ROLE).map(([role, path]) => (
+          <Route
+            key={role}
+            path={path}
+            element={
+              <RequireRole role={role}>
+                <HomePage />
+              </RequireRole>
+            }
+          />
+        ))}
+        <Route
+          path="*"
+          element={<Navigate to={user ? HOME_BY_ROLE[user.role] : "/login"} replace />}
+        />
+      </Routes>
+    </>
   );
 }
