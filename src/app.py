@@ -9,6 +9,7 @@ from src.extensions import csrf, db, login_manager
 from src.rbac import FORBIDDEN_MESSAGE, register_rbac
 from src.routes.auth import auth_bp
 from src.routes.health import health_bp
+from src.routes.departments import departments_bp
 from src.routes.rbac_routes import rbac_bp
 
 
@@ -24,6 +25,7 @@ def create_app(config_class=Config):
     register_rbac(app)
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(departments_bp)
     app.register_blueprint(rbac_bp)
     register_error_handlers(app)
 
