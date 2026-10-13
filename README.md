@@ -69,7 +69,12 @@ Create the database once (reads your `.env`, safe to re-run):
 python scripts/create_db.py
 ```
 
-Create a login account for yourself (asks for a password; until seed data exists):
+Load the shared demo data (1 Admin, 3 Faculty, 30 Students, 2 Departments, 3 Sections, 5 Courses, sample attendance; safe to re-run):
+```powershell
+python scripts/seed.py
+```
+
+Or create an individual login account interactively:
 ```powershell
 python scripts/create_user.py admin@pes.edu "Admin User" admin
 ```

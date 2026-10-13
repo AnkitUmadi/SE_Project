@@ -4,8 +4,7 @@ from flask import Blueprint, jsonify, request
 from flask_login import current_user, login_required
 
 from src.extensions import db
-from src.models.department import Department
-from src.models.section import Section
+from src.models import Department, Section
 
 departments_bp = Blueprint(
     "departments",

@@ -6,9 +6,11 @@ from flask_wtf.csrf import CSRFError
 from src import models  # pylint: disable=unused-import  # registers all tables
 from src.config import Config
 from src.extensions import csrf, db, login_manager
+from src.rbac import FORBIDDEN_MESSAGE, register_rbac
 from src.routes.auth import auth_bp
 from src.routes.health import health_bp
 from src.routes.departments import departments_bp
+from src.routes.rbac_routes import rbac_bp
 
 
 def create_app(config_class=Config):
@@ -20,9 +22,11 @@ def create_app(config_class=Config):
     login_manager.init_app(app)
     csrf.init_app(app)
 
+    register_rbac(app)
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
     app.register_blueprint(departments_bp)
+    app.register_blueprint(rbac_bp)
     register_error_handlers(app)
 
     with app.app_context():
@@ -37,6 +41,10 @@ def register_error_handlers(app):
     @login_manager.unauthorized_handler
     def unauthorized():
         return jsonify({"error": "Please log in first."}), 401
+
+    @app.errorhandler(403)
+    def forbidden(_error):
+        return jsonify({"error": FORBIDDEN_MESSAGE}), 403
 
     @app.errorhandler(CSRFError)
     def csrf_error(error):
