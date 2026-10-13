@@ -11,6 +11,7 @@ from src.routes.auth import auth_bp
 from src.routes.health import health_bp
 from src.routes.departments import departments_bp
 from src.routes.rbac_routes import rbac_bp
+from src.routes.students import students_bp
 
 
 def create_app(config_class=Config):
@@ -27,6 +28,7 @@ def create_app(config_class=Config):
     app.register_blueprint(auth_bp)
     app.register_blueprint(departments_bp)
     app.register_blueprint(rbac_bp)
+    app.register_blueprint(students_bp)
     register_error_handlers(app)
 
     with app.app_context():
