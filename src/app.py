@@ -8,6 +8,7 @@ from src.config import Config
 from src.extensions import csrf, db, login_manager
 from src.routes.auth import auth_bp
 from src.routes.health import health_bp
+from src.routes.departments import departments_bp
 
 
 def create_app(config_class=Config):
@@ -21,6 +22,7 @@ def create_app(config_class=Config):
 
     app.register_blueprint(health_bp)
     app.register_blueprint(auth_bp)
+    app.register_blueprint(departments_bp)
     register_error_handlers(app)
 
     with app.app_context():
