@@ -25,7 +25,7 @@ export default function App() {
         {Object.entries(HOME_BY_ROLE).map(([role, path]) => (
           <Route
             key={role}
-            path={path}
+            path={`${path}/*`}
             element={
               <RequireRole role={role}>
                 <HomePage />
