@@ -13,6 +13,9 @@ from src.routes.departments import departments_bp
 from src.routes.rbac_routes import rbac_bp
 from src.routes.students import students_bp
 from src.routes.fees import fees_bp
+from src.routes.courses import courses_bp
+from src.routes.my_courses import my_courses_bp
+from src.routes.attendance import attendance_bp
 
 
 def create_app(config_class=Config):
@@ -31,6 +34,9 @@ def create_app(config_class=Config):
     app.register_blueprint(rbac_bp)
     app.register_blueprint(fees_bp)
     app.register_blueprint(students_bp)
+    app.register_blueprint(courses_bp)
+    app.register_blueprint(my_courses_bp)
+    app.register_blueprint(attendance_bp)
     register_error_handlers(app)
 
     with app.app_context():
