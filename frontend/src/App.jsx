@@ -6,9 +6,12 @@ import { HOME_BY_ROLE, useAuth } from "./auth/authContext.js";
 import ComingSoonPage from "./pages/ComingSoonPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
+import MyCoursesPage from "./pages/MyCoursesPage.jsx";
+import CoursesPage from "./pages/admin/CoursesPage.jsx";
 import DepartmentsPage from "./pages/admin/DepartmentsPage.jsx";
 import FeesPage from "./pages/admin/FeesPage.jsx";
 import StudentsPage from "./pages/admin/StudentsPage.jsx";
+import AttendancePage from "./pages/faculty/AttendancePage.jsx";
 
 // Pages for each role. Add your card's page here (replace its ComingSoonPage).
 const PAGES_BY_ROLE = {
@@ -16,18 +19,18 @@ const PAGES_BY_ROLE = {
     ["departments", <DepartmentsPage key="departments" />],
     ["students", <StudentsPage key="students" />],
     ["fees", <FeesPage key="fees" />],
-    ["courses", <ComingSoonPage key="courses" title="Courses & Enrollment" card={11} />],
+    ["courses", <CoursesPage key="courses" />],
     ["esa", <ComingSoonPage key="esa" title="ESA Window" card={17} />],
     ["audit", <ComingSoonPage key="audit" title="Audit Log" card={6} />],
   ],
   faculty: [
-    ["courses", <ComingSoonPage key="courses" title="My Courses" card={11} />],
-    ["attendance", <ComingSoonPage key="attendance" title="Mark Attendance" card={13} />],
+    ["courses", <MyCoursesPage key="courses" />],
+    ["attendance", <AttendancePage key="attendance" />],
     ["marks", <ComingSoonPage key="marks" title="Enter Marks" card={15} />],
     ["reports", <ComingSoonPage key="reports" title="Course Analysis" card={25} />],
   ],
   student: [
-    ["courses", <ComingSoonPage key="courses" title="My Courses" card={12} />],
+    ["courses", <MyCoursesPage key="courses" />],
     ["attendance", <ComingSoonPage key="attendance" title="My Attendance" card={21} />],
     ["esa", <ComingSoonPage key="esa" title="ESA Registration" card={18} />],
     ["results", <ComingSoonPage key="results" title="My Results" card={21} />],
