@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Alert, Button, Card, Container, Form } from "react-bootstrap";
+import { Alert, Button, Form } from "react-bootstrap";
 import { Navigate, useNavigate } from "react-router-dom";
 import { HOME_BY_ROLE, useAuth } from "../auth/authContext.js";
 
@@ -34,40 +34,39 @@ export default function LoginPage() {
   }
 
   return (
-    <Container className="d-flex justify-content-center">
-      <Card style={{ maxWidth: 420, width: "100%" }}>
-        <Card.Body>
-          <Card.Title as="h1" className="h4 mb-3">
-            Log in
-          </Card.Title>
-          {error && <Alert variant="danger">{error}</Alert>}
-          <Form onSubmit={handleSubmit}>
-            <Form.Group className="mb-3" controlId="email">
-              <Form.Label>Email</Form.Label>
-              <Form.Control
-                type="email"
-                value={email}
-                onChange={(e) => setEmail(e.target.value)}
-                required
-                autoComplete="username"
-              />
-            </Form.Group>
-            <Form.Group className="mb-3" controlId="password">
-              <Form.Label>Password</Form.Label>
-              <Form.Control
-                type="password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                required
-                autoComplete="current-password"
-              />
-            </Form.Group>
-            <Button type="submit" className="w-100" disabled={submitting}>
-              {submitting ? "Logging in…" : "Log in"}
-            </Button>
-          </Form>
-        </Card.Body>
-      </Card>
-    </Container>
+    <div className="srs-login">
+      <div className="srs-login-card">
+        <h1 className="mb-1">Log in</h1>
+        <p className="text-body-secondary mb-4">
+          Student Record System for admins, faculty and students.
+        </p>
+        {error && <Alert variant="danger">{error}</Alert>}
+        <Form onSubmit={handleSubmit}>
+          <Form.Group className="mb-3" controlId="email">
+            <Form.Label>Email</Form.Label>
+            <Form.Control
+              type="email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              required
+              autoComplete="username"
+            />
+          </Form.Group>
+          <Form.Group className="mb-4" controlId="password">
+            <Form.Label>Password</Form.Label>
+            <Form.Control
+              type="password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              required
+              autoComplete="current-password"
+            />
+          </Form.Group>
+          <Button type="submit" className="btn-srs w-100" disabled={submitting}>
+            {submitting ? "Logging in…" : "Log in"}
+          </Button>
+        </Form>
+      </div>
+    </div>
   );
 }
