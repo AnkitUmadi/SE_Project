@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { afterEach, describe, expect, it, vi } from "vitest";
 import App from "./App.jsx";
@@ -15,6 +15,9 @@ function renderApp(path = "/") {
     </MemoryRouter>,
   );
 }
+
+// The sidebar menu (the home page also has shortcut links with the same names).
+const menu = () => within(screen.getByRole("navigation", { name: "Role navigation" }));
 
 const admin = { id: 1, email: "admin@pes.edu", name: "Admin User", role: "admin" };
 const faculty = { id: 2, email: "f1@pes.edu", name: "Faculty One", role: "faculty" };
@@ -90,11 +93,11 @@ describe("Role-based menus and route guards (TC-AUTH-03)", () => {
     renderApp("/student");
 
     expect(await screen.findByText("Student dashboard")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "My Attendance" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "ESA Registration" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "My Results" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Audit Log" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Enter Marks" })).not.toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "My Attendance" })).toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "ESA Registration" })).toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "My Results" })).toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "Audit Log" })).not.toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "Enter Marks" })).not.toBeInTheDocument();
   });
 
   it("shows only Faculty menu items when logged in as Faculty", async () => {
@@ -102,10 +105,10 @@ describe("Role-based menus and route guards (TC-AUTH-03)", () => {
     renderApp("/faculty");
 
     expect(await screen.findByText("Faculty dashboard")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Mark Attendance" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Enter Marks" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Audit Log" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "My Results" })).not.toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "Mark Attendance" })).toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "Enter Marks" })).toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "Audit Log" })).not.toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "My Results" })).not.toBeInTheDocument();
   });
 
   it("shows only Admin menu items when logged in as Admin", async () => {
@@ -113,11 +116,11 @@ describe("Role-based menus and route guards (TC-AUTH-03)", () => {
     renderApp("/admin");
 
     expect(await screen.findByText("Admin dashboard")).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Students" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Fee Status" })).toBeInTheDocument();
-    expect(screen.getByRole("link", { name: "Audit Log" })).toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "Enter Marks" })).not.toBeInTheDocument();
-    expect(screen.queryByRole("link", { name: "My Results" })).not.toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "Students" })).toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "Fee Status" })).toBeInTheDocument();
+    expect(menu().getByRole("link", { name: "Audit Log" })).toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "Enter Marks" })).not.toBeInTheDocument();
+    expect(menu().queryByRole("link", { name: "My Results" })).not.toBeInTheDocument();
   });
 
   it("redirects a student away from faculty or admin sub-routes", async () => {

@@ -1,0 +1,438 @@
+/* Student Record System theme: a registrar's office tool. Quiet ink-and-paper
+   surfaces, one marigold accent for "you are here" and primary actions. */
+:root {
+  --srs-ink: #1b2a41;
+  --srs-ink-soft: #2c3e5a;
+  --srs-paper: #eef1f5;
+  --srs-surface: #ffffff;
+  --srs-line: #d8dee7;
+  --srs-muted: #5b6b82;
+  --srs-accent: #f2a900;
+  --srs-accent-strong: #d99500;
+  --srs-ok: #1e7d4f;
+  --srs-ok-bg: #e3f3ea;
+  --srs-bad: #b42318;
+  --srs-bad-bg: #fbe8e6;
+  --srs-sidebar-width: 248px;
+
+  --bs-body-font-family: "Public Sans", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --bs-body-color: var(--srs-ink);
+  --bs-body-bg: var(--srs-paper);
+  --bs-border-color: var(--srs-line);
+  --bs-primary: var(--srs-ink);
+  --bs-primary-rgb: 27, 42, 65;
+  --bs-link-color: var(--srs-ink-soft);
+}
+
+body {
+  background: var(--srs-paper);
+  font-feature-settings: "tnum" 1;
+}
+
+:focus-visible {
+  outline: 3px solid var(--srs-accent);
+  outline-offset: 2px;
+}
+
+/* ---------- Layout ---------- */
+.srs-shell {
+  display: flex;
+  min-height: 100vh;
+}
+
+.srs-sidebar {
+  background: var(--srs-ink);
+  color: #dfe6f0;
+}
+
+@media (min-width: 992px) {
+  .srs-sidebar {
+    width: var(--srs-sidebar-width);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+  }
+}
+
+.srs-sidebar .offcanvas-body {
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0.875rem;
+  height: 100%;
+}
+
+.srs-brand {
+  padding: 0 0.625rem 1.25rem;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+  margin-bottom: 1rem;
+}
+
+.srs-brand-name {
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: #fff;
+  line-height: 1.2;
+}
+
+.srs-brand-role {
+  font-size: 0.8rem;
+  color: #a9b6c8;
+  margin-top: 0.25rem;
+}
+
+.srs-nav a {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.6rem 0.75rem;
+  border-radius: 6px;
+  color: #c9d3e1;
+  text-decoration: none;
+  font-weight: 500;
+  font-size: 0.95rem;
+  border-left: 3px solid transparent;
+}
+
+.srs-nav a:hover {
+  background: rgba(255, 255, 255, 0.06);
+  color: #fff;
+}
+
+.srs-nav a.active {
+  background: rgba(242, 169, 0, 0.12);
+  border-left-color: var(--srs-accent);
+  color: #fff;
+}
+
+.srs-user {
+  margin-top: auto;
+  padding: 1rem 0.625rem 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.srs-user-name {
+  color: #fff;
+  font-weight: 600;
+}
+
+.srs-user-email {
+  color: #a9b6c8;
+  font-size: 0.8rem;
+  word-break: break-all;
+}
+
+.srs-main {
+  flex: 1;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+}
+
+.srs-topbar {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--srs-ink);
+  color: #fff;
+}
+
+.srs-content {
+  padding: 2rem clamp(1rem, 3vw, 2.5rem) 3rem;
+  max-width: 1200px;
+  width: 100%;
+}
+
+/* ---------- Page pieces ---------- */
+.srs-page-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.srs-page-header h1 {
+  font-size: 1.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  margin: 0;
+}
+
+.srs-page-header p {
+  color: var(--srs-muted);
+  margin: 0.25rem 0 0;
+  max-width: 60ch;
+}
+
+.srs-panel {
+  background: var(--srs-surface);
+  border: 1px solid var(--srs-line);
+  border-radius: 10px;
+}
+
+.srs-toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  padding: 1rem;
+  border-bottom: 1px solid var(--srs-line);
+}
+
+.srs-toolbar .form-control,
+.srs-toolbar .form-select {
+  max-width: 280px;
+}
+
+.srs-table {
+  margin: 0;
+}
+
+.srs-table thead th {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--srs-muted);
+  background: #f7f9fb;
+  border-bottom-width: 1px;
+  white-space: nowrap;
+}
+
+.srs-table td {
+  vertical-align: middle;
+}
+
+.srs-srn {
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.srs-empty {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: var(--srs-muted);
+}
+
+.srs-empty strong {
+  display: block;
+  color: var(--srs-ink);
+  font-size: 1.05rem;
+  margin-bottom: 0.25rem;
+}
+
+/* Primary action: the one marigold button on each page */
+.btn-srs {
+  background: var(--srs-accent);
+  border: 1px solid var(--srs-accent);
+  color: var(--srs-ink);
+  font-weight: 700;
+}
+
+.btn-srs:hover,
+.btn-srs:focus {
+  background: var(--srs-accent-strong);
+  border-color: var(--srs-accent-strong);
+  color: var(--srs-ink);
+}
+
+.btn-icon {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.4rem;
+}
+
+/* Status badges */
+.srs-status {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 999px;
+  font-size: 0.8rem;
+  font-weight: 700;
+}
+
+.srs-status-paid {
+  background: var(--srs-ok-bg);
+  color: var(--srs-ok);
+}
+
+.srs-status-unpaid {
+  background: var(--srs-bad-bg);
+  color: var(--srs-bad);
+}
+
+.srs-status-none {
+  background: #eef1f5;
+  color: var(--srs-muted);
+}
+
+/* ---------- Departments: the register board ---------- */
+.srs-dept-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1rem;
+}
+
+.srs-dept {
+  background: var(--srs-surface);
+  border: 1px solid var(--srs-line);
+  border-top: 4px solid var(--srs-ink);
+  border-radius: 10px;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.srs-dept-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 0.5rem;
+}
+
+.srs-dept-name {
+  font-size: 1.15rem;
+  font-weight: 800;
+  margin: 0;
+}
+
+.srs-dept-count {
+  color: var(--srs-muted);
+  font-size: 0.85rem;
+}
+
+.srs-sections {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.srs-section-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.3rem 0.35rem 0.3rem 0.75rem;
+  border: 1px solid var(--srs-line);
+  border-radius: 999px;
+  font-weight: 700;
+  background: #f7f9fb;
+}
+
+.srs-chip-remove {
+  border: 0;
+  background: transparent;
+  color: var(--srs-muted);
+  border-radius: 999px;
+  width: 1.5rem;
+  height: 1.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.srs-chip-remove:hover {
+  background: var(--srs-bad-bg);
+  color: var(--srs-bad);
+}
+
+/* ---------- Login ---------- */
+.srs-login {
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+  padding: 1rem;
+  background: var(--srs-ink);
+}
+
+.srs-login-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--srs-surface);
+  border-radius: 12px;
+  padding: 2rem;
+  border-top: 6px solid var(--srs-accent);
+}
+
+.srs-login-card h1 {
+  font-size: 1.6rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * {
+    transition: none !important;
+    animation: none !important;
+  }
+}
+
+.srs-shortcuts {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1rem;
+}
+
+.srs-shortcuts a:hover {
+  border-color: var(--srs-ink-soft);
+}
+
+/* ---------- Fixes on top of Bootstrap defaults ---------- */
+/* Bootstrap makes a responsive offcanvas transparent on desktop; keep the ink sidebar. */
+.srs-sidebar.offcanvas-lg,
+.srs-sidebar.offcanvas {
+  background-color: var(--srs-ink) !important;
+  color: #dfe6f0;
+}
+
+/* Pop-ups and table rows sit on white paper, not the page background. */
+.modal-content {
+  background: var(--srs-surface);
+  border: 0;
+  border-radius: 12px;
+}
+.modal-header,
+.modal-footer {
+  border-color: var(--srs-line);
+}
+.srs-table {
+  --bs-table-bg: var(--srs-surface);
+  --bs-table-hover-bg: #f3f6fa;
+}
+
+/* Secondary buttons and toggles use the ink colour instead of Bootstrap blue. */
+.btn-primary,
+.btn-outline-primary {
+  --bs-btn-color: var(--srs-ink);
+  --bs-btn-border-color: var(--srs-line);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: var(--srs-ink);
+  --bs-btn-hover-border-color: var(--srs-ink);
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: var(--srs-ink);
+  --bs-btn-active-border-color: var(--srs-ink);
+  --bs-btn-bg: var(--srs-surface);
+}
+.btn-primary {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--srs-ink);
+  --bs-btn-border-color: var(--srs-ink);
+  --bs-btn-hover-bg: var(--srs-ink-soft);
+}
+.btn-check:checked + .btn,
+.btn.active {
+  background: var(--srs-ink);
+  border-color: var(--srs-ink);
+  color: #fff;
+}
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--srs-ink-soft);
+  box-shadow: 0 0 0 0.2rem rgba(27, 42, 65, 0.15);
+}
+.form-control,
+.form-select {
+  background-color: var(--srs-surface);
+}

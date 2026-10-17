@@ -1,21 +1,41 @@
 import { Container, Spinner } from "react-bootstrap";
 import { Navigate, Route, Routes } from "react-router-dom";
-import AppNavbar from "./components/AppNavbar.jsx";
+import AppLayout from "./components/AppLayout.jsx";
 import RequireRole from "./components/RequireRole.jsx";
 import { HOME_BY_ROLE, useAuth } from "./auth/authContext.js";
-import CoursesPage from "./pages/admin/CoursesPage.jsx";
-import AttendancePage from "./pages/faculty/AttendancePage.jsx";
+import ComingSoonPage from "./pages/ComingSoonPage.jsx";
 import HomePage from "./pages/HomePage.jsx";
 import LoginPage from "./pages/LoginPage.jsx";
 import MyCoursesPage from "./pages/MyCoursesPage.jsx";
+import CoursesPage from "./pages/admin/CoursesPage.jsx";
+import DepartmentsPage from "./pages/admin/DepartmentsPage.jsx";
+import FeesPage from "./pages/admin/FeesPage.jsx";
+import StudentsPage from "./pages/admin/StudentsPage.jsx";
+import AttendancePage from "./pages/faculty/AttendancePage.jsx";
 
-// Feature pages, each guarded by the role allowed to open it.
-const FEATURE_PAGES = [
-  { path: "/admin/courses", role: "admin", page: <CoursesPage /> },
-  { path: "/faculty/courses", role: "faculty", page: <MyCoursesPage /> },
-  { path: "/faculty/attendance", role: "faculty", page: <AttendancePage /> },
-  { path: "/student/courses", role: "student", page: <MyCoursesPage /> },
-];
+// Pages for each role. Add your card's page here (replace its ComingSoonPage).
+const PAGES_BY_ROLE = {
+  admin: [
+    ["departments", <DepartmentsPage key="departments" />],
+    ["students", <StudentsPage key="students" />],
+    ["fees", <FeesPage key="fees" />],
+    ["courses", <CoursesPage key="courses" />],
+    ["esa", <ComingSoonPage key="esa" title="ESA Window" card={17} />],
+    ["audit", <ComingSoonPage key="audit" title="Audit Log" card={6} />],
+  ],
+  faculty: [
+    ["courses", <MyCoursesPage key="courses" />],
+    ["attendance", <AttendancePage key="attendance" />],
+    ["marks", <ComingSoonPage key="marks" title="Enter Marks" card={15} />],
+    ["reports", <ComingSoonPage key="reports" title="Course Analysis" card={25} />],
+  ],
+  student: [
+    ["courses", <MyCoursesPage key="courses" />],
+    ["attendance", <ComingSoonPage key="attendance" title="My Attendance" card={21} />],
+    ["esa", <ComingSoonPage key="esa" title="ESA Registration" card={18} />],
+    ["results", <ComingSoonPage key="results" title="My Results" card={21} />],
+  ],
+};
 
 export default function App() {
   const { user, loading } = useAuth();
@@ -29,29 +49,29 @@ export default function App() {
   }
 
   return (
-    <>
-      <AppNavbar />
-      <Routes>
-        <Route path="/login" element={<LoginPage />} />
-        {FEATURE_PAGES.map(({ path, role, page }) => (
-          <Route key={path} path={path} element={<RequireRole role={role}>{page}</RequireRole>} />
-        ))}
-        {Object.entries(HOME_BY_ROLE).map(([role, path]) => (
-          <Route
-            key={role}
-            path={`${path}/*`}
-            element={
-              <RequireRole role={role}>
-                <HomePage />
-              </RequireRole>
-            }
-          />
-        ))}
+    <Routes>
+      <Route path="/login" element={<LoginPage />} />
+      {Object.entries(HOME_BY_ROLE).map(([role, path]) => (
         <Route
-          path="*"
-          element={<Navigate to={user ? HOME_BY_ROLE[user.role] : "/login"} replace />}
-        />
-      </Routes>
-    </>
+          key={role}
+          path={path}
+          element={
+            <RequireRole role={role}>
+              <AppLayout />
+            </RequireRole>
+          }
+        >
+          <Route index element={<HomePage />} />
+          {PAGES_BY_ROLE[role].map(([subPath, element]) => (
+            <Route key={subPath} path={subPath} element={element} />
+          ))}
+          <Route path="*" element={<Navigate to={path} replace />} />
+        </Route>
+      ))}
+      <Route
+        path="*"
+        element={<Navigate to={user ? HOME_BY_ROLE[user.role] : "/login"} replace />}
+      />
+    </Routes>
   );
 }
